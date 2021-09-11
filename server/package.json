@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "babel-watch src/serverSprinklers.js",
     "build": "babel src -d lib"
   },
   "author": "",
@@ -12,6 +13,13 @@
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.15.6",
-    "@babel/preset-react": "^7.14.5"
+    "@babel/preset-react": "^7.14.5",
+    "babel-watch": "^7.5.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cron-parser": "^4.0.0",
+    "immutability-helper": "^3.1.1",
+    "socket.io": "^4.2.0"
   }
 }

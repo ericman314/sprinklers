@@ -91,6 +91,7 @@ button {
   border-radius: 1.2em;
   padding: 0.2em 2em 0.2em 0.2em;
   border: solid dimgray 1px;
+  margin: 0 8px;
 }
 
 .toggle input {

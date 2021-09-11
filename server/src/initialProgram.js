@@ -1,4 +1,4 @@
-export const initialProgram = {
+export default {
   schedule: {
     daysOfWeek: {
       sunday: false,
@@ -31,6 +31,12 @@ export const initialProgram = {
     },
     timeOfDay: 1600
   },
-  enableSchedule: false
+  enableSchedule: false,
+  startedAt: 0,
+  pausedAt: 0,
+  totalTimePaused: 0,
+  testStartedAt: 0,
+  testZone: 0,
+  testDuration: 1,
 
 }
