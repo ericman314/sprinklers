@@ -1,4 +1,4 @@
-const update = require('immutability-helper')
+import update from 'immutability-helper'
 
 export const actions = {
 

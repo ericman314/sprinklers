@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { getDerivedState } from './getDerivedState'
 import { NumericInput } from './NumericInput'
 import { actions } from './programReducer'
+import { fetchPost } from './fetchJson'
 import dayjs from 'dayjs'
 
 export function ProgramEditor({ program, dispatch }) {
@@ -170,6 +171,14 @@ export function ProgramEditor({ program, dispatch }) {
     })
   }
 
+  async function handleLogout() {
+    try {
+      await fetchPost('/api/logout')
+    } finally {
+      window.location.href = '/login.html'
+    }
+  }
+
 
   useEffect(() => {
     let intervalHandle
@@ -308,6 +317,9 @@ export function ProgramEditor({ program, dispatch }) {
         {state.currentZone === 5 && <img id='zone6' src="zone6.png" className={`${state.paused ? 'paused' : ''}`} />}
         {state.currentZone === 6 && <img id='zone7' src="zone7.png" className={`${state.paused ? 'paused' : ''}`} />}
         {state.currentZone === 7 && <img id='zone8' src="zone8.png" className={`${state.paused ? 'paused' : ''}`} />}
+      </div>
+      <div>
+        <button id="logout" onClick={handleLogout}>Log out</button>
       </div>
       <pre>{JSON.stringify(program, null, 2)}</pre>
       <pre>{JSON.stringify(state, null, 2)}</pre>

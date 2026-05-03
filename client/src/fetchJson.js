@@ -1,5 +1,13 @@
 const _rootURL = ''
 
+let redirecting = false
+function redirectToLogin() {
+  if (redirecting) return
+  redirecting = true
+  const next = encodeURIComponent(window.location.pathname + window.location.search)
+  window.location.href = `/login.html?next=${next}`
+}
+
 export async function fetchGet(url, data = {}, rootURL = null, headers = {}, abortController) {
 
   let fullUrl = (rootURL || _rootURL) + url
@@ -15,6 +23,11 @@ export async function fetchGet(url, data = {}, rootURL = null, headers = {}, abo
   }
 
   const response = await fetch(fullUrl, opts)
+
+  if (response.status === 401) {
+    redirectToLogin()
+    throw new FetchError('Unauthorized', null, 401, fullUrl, 'get', data)
+  }
 
   if (!response.ok) {
     throw new FetchError(`Received status code ${response.status} from GET request to ${fullUrl}.`, null, response.status, fullUrl, 'get', data)
@@ -55,6 +68,11 @@ export async function fetchPost(url, data = {}, rootURL = null, headers = {}, ab
   }
 
   const response = await fetch(fullUrl, opts)
+
+  if (response.status === 401) {
+    redirectToLogin()
+    throw new FetchError('Unauthorized', null, 401, fullUrl, 'post', data)
+  }
 
   if (!response.ok) {
     throw new FetchError(`Received status code ${response.status} from POST request to ${fullUrl}.`, null, response.status, fullUrl, 'post', data)

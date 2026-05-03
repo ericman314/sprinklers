@@ -1,11 +1,19 @@
 {
   "name": "sprinklers",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "2.0.0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npm-run-all --parallel dev:server dev:client",
+    "dev:server": "npm --workspace @sprinklers/server run dev",
+    "dev:client": "npm --workspace @sprinklers/client run dev",
+    "build": "npm --workspace @sprinklers/client run build",
+    "start": "npm --workspace @sprinklers/server run start"
   },
-  "author": "",
-  "license": "ISC"
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
 }

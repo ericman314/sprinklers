@@ -1,25 +1,20 @@
 {
-  "name": "server-sprinklers",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "@sprinklers/server",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/serverSprinklers.js",
   "scripts": {
-    "start": "babel-watch src/serverSprinklers.js",
-    "build": "babel src -d lib"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@babel/cli": "^7.15.4",
-    "@babel/core": "^7.15.5",
-    "@babel/preset-env": "^7.15.6",
-    "@babel/preset-react": "^7.14.5",
-    "babel-watch": "^7.5.0"
+    "start": "node src/serverSprinklers.js",
+    "dev": "node --watch src/serverSprinklers.js"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "cron-parser": "^4.0.0",
+    "argon2": "^0.41.1",
+    "cookie-parser": "^1.4.7",
+    "cron-parser": "^4.9.0",
+    "express": "^5.1.0",
     "immutability-helper": "^3.1.1",
-    "socket.io": "^4.2.0"
+    "jsonwebtoken": "^9.0.2",
+    "socket.io": "^4.8.1"
   }
 }

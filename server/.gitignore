@@ -1,2 +1,4 @@
 /node_modules
 /lib
+/program.json
+/config/config.json

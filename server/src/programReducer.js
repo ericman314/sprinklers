@@ -1,4 +1,4 @@
-const update = require('immutability-helper')
+import update from 'immutability-helper'
 
 export const actions = {
 
@@ -20,10 +20,6 @@ export const actions = {
 }
 
 export function programReducer(program, action) {
-
-  console.log(program)
-  console.log(action)
-
   switch (action.type) {
 
     case actions.SET_PROGRAM:
