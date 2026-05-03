@@ -23,13 +23,17 @@ try {
 
 
 const bodyParser = require('body-parser')
-const { getDerivedState } = require('../getDerivedState')
+const { getDerivedState } = require('./getDerivedState')
 const { env } = require('process')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 app.get('/api/program', (req, res) => {
   res.json(program)
+})
+
+app.get('/api/state', (req, res) => {
+  res.json(state)
 })
 
 app.post('/api/updateProgram', (req, res) => {
@@ -44,8 +48,13 @@ server.listen(3000, () => {
   console.log('Server is listening on port 3000')
 })
 
-io.on('connection', socket => {
-  console.log('socket connected')
+io.on('connect', socket => {
+  console.log(`socket ${socket.id} connected`)
+  io.emit('state', state)
+})
+
+io.on('disconnect', socket => {
+  console.log(`socket ${socket.id} disconnected`)
 })
 
 function dispatch(action) {
@@ -59,9 +68,24 @@ function dispatch(action) {
   fs.writeFileSync('program.json', JSON.stringify(program), 'utf8')
 }
 
+let seq = 0
+let state = {}
+
 setInterval(() => {
   // Compute derived state
-  let state = getDerivedState(program, Date.now())
+  let newState = getDerivedState(program, Date.now())
+
+
+  // Send state to all sockets (including the raspi) if the currentZone changes, or every 10 seconds
+  if (state.currentZone !== newState.currentZone
+    || state.running !== newState.running
+    || state.paused !== newState.paused
+    || seq % 10 === 0) {
+    io.emit('state', newState)
+  }
+
+  seq++
+  state = newState
 
   // Stop program if it is not running
   if (!state.running && program.totalTimePaused > 0) {
@@ -69,4 +93,4 @@ setInterval(() => {
     io.emit('programUpdate', program)
   }
 
-}, 5000)
+}, 1000)
