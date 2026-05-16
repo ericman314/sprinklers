@@ -11,7 +11,7 @@ module.exports = {
     env: {
       NODE_ENV: 'production',
       PORT: '8084',
-      PROGRAM_PATH: '/home/eric/sprinklers/state/program.json',
+      PROGRAM_PATH: '/home/eric/sprinklers/current/server/state/program.json',
       CONFIG_PATH: '/home/eric/sprinklers/current/server/config/config.json',
       CLIENT_DIST: '/home/eric/sprinklers/current/client/dist',
     },
