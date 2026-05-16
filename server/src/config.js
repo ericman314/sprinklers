@@ -6,13 +6,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export function loadConfig() {
   const configPath = process.env.CONFIG_PATH || path.resolve(__dirname, '../config/config.json')
-  try {
-    return JSON.parse(fs.readFileSync(configPath, 'utf8'))
-  } catch (ex) {
-    if (ex.code === 'ENOENT') {
-      console.warn(`config file not found at ${configPath}; using empty config`)
-      return { passwordHash: null, jwtSecret: null, trustIps: [] }
-    }
-    throw ex
-  }
+  const config = JSON.parse(fs.readFileSync(configPath, 'utf8'))
+  if (!config.passwordHash) throw new Error(`config at ${configPath} is missing passwordHash`)
+  if (!config.jwtSecret) throw new Error(`config at ${configPath} is missing jwtSecret`)
+  return config
 }
